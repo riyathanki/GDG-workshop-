@@ -1,0 +1,6 @@
+{
+  "name": "GovFlow — Digital Government Document & Citizen Service Platform",
+  "description": "Prototype citizen-centric government service platform featuring end-to-end document verification, real-time application tracking, officer review workflows, prototype digital certificates, and AI citizen assistance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
