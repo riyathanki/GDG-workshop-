@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Globe
 } from 'lucide-react';
+import { askCitizenAssistant } from '../../services/aiService';
 
 interface ChatMessage {
   id: string;
@@ -78,29 +79,15 @@ export const AiCitizenAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: query,
-          language,
-          userRole: currentUser.role
-        })
-      });
-
-      const data = await response.json();
-      const replyText = data.reply || 'I am here to guide you with understanding public certificates and document criteria.';
-
+      const response = await askCitizenAssistant(query, language, currentUser.role);
       const botMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'assistant',
-        text: replyText,
+        text: response.reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-
       setMessages(prev => [...prev, botMsg]);
     } catch (err) {
-      // Resilient fallback
       const fallbackMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'assistant',
